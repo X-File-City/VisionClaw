@@ -1,0 +1,351 @@
+{
+  "id": "visionclaw-onboarding",
+  "title": "VisionClaw: AI Wearable Assistant",
+  "description": "Explore VisionClaw — a real-time AI assistant for Meta Ray-Ban smart glasses combining Gemini Live voice+vision, OpenClaw tool integrations, and WebRTC live streaming across iOS and Android",
+  "version": "1.0.0",
+  "audience": "New Developers & AI Assistants",
+  "prerequisites": [
+    "Familiarity with Swift or Kotlin",
+    "Basic understanding of WebSockets and real-time APIs"
+  ],
+  "steps": [
+    {
+      "id": "step-1-overview",
+      "title": "Welcome to VisionClaw",
+      "description": "VisionClaw transforms Meta Ray-Ban smart glasses into a voice-controlled AI assistant. The repo contains native iOS and Android sample apps, plus a signaling server for WebRTC streaming. The top level has documentation and assets, while the highlighted sample apps directory holds all source code.",
+      "estimatedTime": 45,
+      "focusDirectory": "",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "docs-layer",
+          "name": "Documentation",
+          "color": "#8b5cf6",
+          "items": [
+            { "path": "README.md", "type": "file" },
+            { "path": "CHANGELOG.md", "type": "file" },
+            { "path": "CONTRIBUTING.md", "type": "file" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "fill"
+        },
+        {
+          "id": "samples-layer",
+          "name": "Sample Apps",
+          "color": "#3b82f6",
+          "items": [
+            { "path": "samples", "type": "directory" }
+          ],
+          "opacity": 0.6,
+          "renderStrategy": "border"
+        }
+      ],
+      "interactiveActions": [
+        {
+          "type": "hover-directory",
+          "description": "Hover over the samples directory to see the iOS and Android apps",
+          "target": "samples"
+        }
+      ]
+    },
+    {
+      "id": "step-2-ios-app",
+      "title": "iOS App Structure",
+      "description": "The iOS app is a SwiftUI project with over 40 source files organized into feature modules: Gemini for AI voice and vision, OpenClaw for tool calling, WebRTC for live streaming, plus Views, ViewModels, and Settings. The highlighted entry point is where the app launches.",
+      "estimatedTime": 60,
+      "focusDirectory": "samples/CameraAccess/CameraAccess",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "ios-entry",
+          "name": "App Entry Point",
+          "color": "#ef4444",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess/CameraAccessApp.swift", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "fill"
+        },
+        {
+          "id": "ios-features",
+          "name": "Feature Modules",
+          "color": "#3b82f6",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess/Gemini", "type": "directory" },
+            { "path": "samples/CameraAccess/CameraAccess/OpenClaw", "type": "directory" },
+            { "path": "samples/CameraAccess/CameraAccess/WebRTC", "type": "directory" }
+          ],
+          "opacity": 0.6,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "ios-ui",
+          "name": "UI Layer",
+          "color": "#10b981",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess/Views", "type": "directory" },
+            { "path": "samples/CameraAccess/CameraAccess/ViewModels", "type": "directory" }
+          ],
+          "opacity": 0.6,
+          "renderStrategy": "border"
+        }
+      ],
+      "interactiveActions": [
+        {
+          "type": "click-file",
+          "description": "Click the highlighted entry point to see where the app launches",
+          "target": "samples/CameraAccess/CameraAccess/CameraAccessApp.swift"
+        }
+      ]
+    },
+    {
+      "id": "step-3-gemini-integration",
+      "title": "Gemini Live: Voice + Vision AI",
+      "description": "The heart of VisionClaw. The core service manages a WebSocket connection to Google's Gemini Live API, streaming camera frames at roughly one per second and audio in real time. The audio pipeline handles mic capture and speaker playback. Configuration defines the model, system prompt, and tool declarations. The session view model orchestrates the lifecycle and wires everything together.",
+      "estimatedTime": 90,
+      "focusDirectory": "samples/CameraAccess/CameraAccess/Gemini",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "gemini-core",
+          "name": "Gemini Core",
+          "color": "#f59e0b",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess/Gemini/GeminiLiveService.swift", "type": "file" },
+            { "path": "samples/CameraAccess/CameraAccess/Gemini/GeminiConfig.swift", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "fill"
+        },
+        {
+          "id": "gemini-audio",
+          "name": "Audio Pipeline",
+          "color": "#ec4899",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess/Gemini/AudioManager.swift", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "fill"
+        },
+        {
+          "id": "gemini-session",
+          "name": "Session Management",
+          "color": "#06b6d4",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess/Gemini/GeminiSessionViewModel.swift", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "fill"
+        }
+      ],
+      "interactiveActions": [
+        {
+          "type": "click-file",
+          "description": "Click the core service to see the WebSocket state machine",
+          "target": "samples/CameraAccess/CameraAccess/Gemini/GeminiLiveService.swift"
+        }
+      ]
+    },
+    {
+      "id": "step-4-openclaw-tools",
+      "title": "OpenClaw: 56+ Tool Integrations",
+      "description": "When Gemini decides an action is needed (like adding eggs to a shopping list), it emits a tool call. The router intercepts these and forwards them to the OpenClaw gateway over HTTP. Tool declarations define what capabilities Gemini can invoke. A separate event client listens for proactive notifications over a WebSocket stream, enabling the glasses to alert you about incoming messages or calendar events.",
+      "estimatedTime": 90,
+      "focusDirectory": "samples/CameraAccess/CameraAccess/OpenClaw",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "tool-routing",
+          "name": "Tool Routing",
+          "color": "#f97316",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess/OpenClaw/ToolCallRouter.swift", "type": "file" },
+            { "path": "samples/CameraAccess/CameraAccess/OpenClaw/ToolCallModels.swift", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "fill"
+        },
+        {
+          "id": "openclaw-comms",
+          "name": "Gateway Communication",
+          "color": "#a855f7",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess/OpenClaw/OpenClawBridge.swift", "type": "file" },
+            { "path": "samples/CameraAccess/CameraAccess/OpenClaw/OpenClawEventClient.swift", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "fill"
+        }
+      ],
+      "interactiveActions": [
+        {
+          "type": "click-file",
+          "description": "Click the router to see how tool calls are dispatched",
+          "target": "samples/CameraAccess/CameraAccess/OpenClaw/ToolCallRouter.swift"
+        }
+      ]
+    },
+    {
+      "id": "step-5-webrtc-streaming",
+      "title": "WebRTC: Live POV Streaming",
+      "description": "VisionClaw can stream the glasses' point-of-view to a browser viewer in real time via WebRTC. The client wraps peer connection setup and handles SDP/ICE negotiation. A signaling client connects to the WebSocket server for room management. The custom video capturer bridges camera frames into the WebRTC video track. The signaling server and browser viewer are covered in a later step.",
+      "estimatedTime": 90,
+      "focusDirectory": "samples/CameraAccess/CameraAccess/WebRTC",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "webrtc-core",
+          "name": "WebRTC Core",
+          "color": "#0ea5e9",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess/WebRTC/WebRTCClient.swift", "type": "file" },
+            { "path": "samples/CameraAccess/CameraAccess/WebRTC/SignalingClient.swift", "type": "file" },
+            { "path": "samples/CameraAccess/CameraAccess/WebRTC/CustomVideoCapturer.swift", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "fill"
+        },
+        {
+          "id": "webrtc-ui",
+          "name": "Video UI",
+          "color": "#10b981",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess/WebRTC/WebRTCSessionViewModel.swift", "type": "file" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "fill"
+        }
+      ],
+      "interactiveActions": [
+        {
+          "type": "click-file",
+          "description": "Click the client to see peer connection setup",
+          "target": "samples/CameraAccess/CameraAccess/WebRTC/WebRTCClient.swift"
+        }
+      ]
+    },
+    {
+      "id": "step-6-android-app",
+      "title": "Android App: Kotlin Mirror",
+      "description": "The Android app mirrors the iOS architecture in Kotlin with Jetpack Compose, following the same module structure for Gemini, OpenClaw, WebRTC, UI, streaming, and settings. Key differences include OkHttp for WebSockets, CameraX for the phone camera, and a foreground streaming service that keeps the connection alive in the background.",
+      "estimatedTime": 60,
+      "focusDirectory": "samples/CameraAccessAndroid",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "android-source",
+          "name": "Android Source",
+          "color": "#22c55e",
+          "items": [
+            { "path": "samples/CameraAccessAndroid/app", "type": "directory" }
+          ],
+          "opacity": 0.6,
+          "renderStrategy": "border"
+        }
+      ],
+      "interactiveActions": [
+        {
+          "type": "hover-directory",
+          "description": "Hover over the app directory to explore the Android source tree",
+          "target": "samples/CameraAccessAndroid/app"
+        }
+      ]
+    },
+    {
+      "id": "step-7-signaling-server",
+      "title": "Signaling Server & Browser Viewer",
+      "description": "The signaling server coordinates WebRTC connections between the phone app and browser viewers. It manages rooms (one creator, one viewer), relays SDP offers/answers and ICE candidates, and provides TURN credentials. The browser viewer lets anyone join by room code to watch the glasses' live POV with bidirectional audio. The whole service is containerized and deployed to Fly.io.",
+      "estimatedTime": 60,
+      "focusDirectory": "samples/CameraAccess/server",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "server-core",
+          "name": "Server Logic",
+          "color": "#eab308",
+          "items": [
+            { "path": "samples/CameraAccess/server/index.js", "type": "file" },
+            { "path": "samples/CameraAccess/server/package.json", "type": "file" }
+          ],
+          "opacity": 0.8,
+          "renderStrategy": "fill"
+        },
+        {
+          "id": "server-deploy",
+          "name": "Deployment",
+          "color": "#6366f1",
+          "items": [
+            { "path": "samples/CameraAccess/server/Dockerfile", "type": "file" },
+            { "path": "samples/CameraAccess/server/fly.toml", "type": "file" }
+          ],
+          "opacity": 0.7,
+          "renderStrategy": "fill"
+        }
+      ],
+      "interactiveActions": [
+        {
+          "type": "click-file",
+          "description": "Click the server entry point to see room management and SDP relay logic",
+          "target": "samples/CameraAccess/server/index.js"
+        }
+      ]
+    },
+    {
+      "id": "step-8-full-picture",
+      "title": "The Full Picture",
+      "description": "You've now seen all the key pieces: Gemini Live provides real-time voice and vision AI, OpenClaw extends capabilities with 56+ tool integrations, WebRTC enables live POV sharing, and all of it runs natively on both iOS and Android. The data flow is glasses camera to phone app, then out to the AI service for conversation, the streaming layer for live viewers, and the tool gateway for real-world actions. Check the highlighted documentation for setup instructions and recent features like proactive notifications and audio-only mode.",
+      "estimatedTime": 30,
+      "focusDirectory": "",
+      "colorMode": "fileTypes",
+      "highlightLayers": [
+        {
+          "id": "ios-app",
+          "name": "iOS App (Swift)",
+          "color": "#3b82f6",
+          "items": [
+            { "path": "samples/CameraAccess/CameraAccess", "type": "directory" }
+          ],
+          "opacity": 0.5,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "android-app",
+          "name": "Android App (Kotlin)",
+          "color": "#22c55e",
+          "items": [
+            { "path": "samples/CameraAccessAndroid", "type": "directory" }
+          ],
+          "opacity": 0.5,
+          "renderStrategy": "border"
+        },
+        {
+          "id": "server-infra",
+          "name": "Signaling Server (Node.js)",
+          "color": "#eab308",
+          "items": [
+            { "path": "samples/CameraAccess/server", "type": "directory" }
+          ],
+          "opacity": 0.5,
+          "renderStrategy": "border"
+        }
+      ],
+      "resources": [
+        {
+          "title": "VisionClaw README",
+          "url": "README.md",
+          "type": "documentation"
+        },
+        {
+          "title": "Changelog & Recent Features",
+          "url": "CHANGELOG.md",
+          "type": "documentation"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "author": "Claude",
+    "createdAt": "2026-03-23",
+    "tags": ["onboarding", "architecture", "ai-wearable", "webrtc", "gemini", "openclaw"]
+  }
+}
